@@ -8,6 +8,7 @@ import androidx.room.Update;
 
 import com.example.todolistpractice.data.entity.TodoItem;
 
+import java.util.ArrayList;
 import java.util.List;
 
 @Dao
@@ -30,7 +31,6 @@ public interface TodoDao {
 
     @Query("SELECT * FROM Todo WHERE id = :id")
     TodoItem getTodo(int id);
-
 
 
 

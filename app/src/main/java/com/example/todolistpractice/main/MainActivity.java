@@ -31,10 +31,9 @@ public class MainActivity extends AppCompatActivity {
     private MainTodoAdapter adapter;
 
 
-
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
-        getMenuInflater().inflate(R.menu.delete_all_menu,menu);
+        getMenuInflater().inflate(R.menu.delete_all_menu, menu);
 
         return super.onCreateOptionsMenu(menu);
     }
@@ -45,7 +44,7 @@ public class MainActivity extends AppCompatActivity {
         setContentView(R.layout.activity_main);
 
         ActionBar actionBar = getSupportActionBar();
-        if(actionBar != null){
+        if (actionBar != null) {
             actionBar.setTitle("TODO APP");
         }
 
@@ -56,7 +55,7 @@ public class MainActivity extends AppCompatActivity {
 
 
         main_rcv.setAdapter(adapter);
-        main_rcv.setLayoutManager(new LinearLayoutManager(this,RecyclerView.VERTICAL,false));
+        main_rcv.setLayoutManager(new LinearLayoutManager(this, RecyclerView.VERTICAL, false));
 
         final MyDatabase myDatabase = MyDatabase.getInstance(this);
         List<TodoItem> list_item = myDatabase.todoDao().getAllTodo();
@@ -65,47 +64,45 @@ public class MainActivity extends AppCompatActivity {
         main_fab.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Long time = System.currentTimeMillis();
-                TodoItem temp = new TodoItem(time.toString());
-                myDatabase.todoDao().insertTodo(temp);
-                adapter.addItem(temp);
+
+                Intent intent = new Intent(MainActivity.this, AddTodoActivity.class);
+                startActivity(intent);
+
             }
         });
         //지울것
-        FloatingActionButton test  = findViewById(R.id.main_fab_intent);
-        test.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                Intent intent = new Intent(MainActivity.this, AddTodoActivity.class);
-                startActivity(intent);
-            }
-        });
+        // FloatingActionButton test  = findViewById(R.id.main_fab_intent);
+        // test.setOnClickListener(new View.OnClickListener() {
+
+
     }
 
     @Override
     public boolean onOptionsItemSelected(@NonNull MenuItem item) {
-        switch (item.getItemId()){
-            case R.id.delete_all_item :
+        switch (item.getItemId()) {
+            case R.id.delete_all_item:
                 adapter.removeAllITem();
                 MyDatabase myDatabase = MyDatabase.getInstance(this);
                 myDatabase.todoDao().deleteAllTodo();
                 break;
 
-            case R.id.delete_selected_item :
+            case R.id.delete_selected_item:
 
-                MyDatabase myDatabase1  = MyDatabase.getInstance(this);
-                List<TodoItem> itemList= myDatabase1.todoDao().getAllTodo();
-                int n = 0;
-                for(int i = 0; i<itemList.size();i++){
-                    if(adapter.checkItem(itemList.get(i))) {
-                        adapter.removeItem(itemList.get(i), i);
+                MyDatabase myDatabase1 = MyDatabase.getInstance(this);
+                List<TodoItem> itemList = myDatabase1.todoDao().getAllTodo();
+                List<TodoItem> newList = new ArrayList<>();
+                for (int i = 0; i < itemList.size(); i++) {
+                    if (adapter.checkItem(itemList.get(i))) {
                         myDatabase1 = MyDatabase.getInstance(this);
                         myDatabase1.todoDao().deleteTodo(itemList.get(i));
-                        adapter.notifyItemRemoved(i);
-                        Toast.makeText(this, "um" + i, Toast.LENGTH_SHORT).show();
+
+                    }else{
+                        newList.add(itemList.get(i));
                     }
 
                 }
+                adapter.removeAllItem(newList);
+
                 break;
 
         }
@@ -116,14 +113,14 @@ public class MainActivity extends AppCompatActivity {
     @Override
     protected void onRestart() {
         super.onRestart();
-        MyDatabase myDatabase  = MyDatabase.getInstance(this);
+        MyDatabase myDatabase = MyDatabase.getInstance(this);
         adapter.submitAll(myDatabase.todoDao().getAllTodo());
     }
 
     @Override
     protected void onResume() {
         super.onResume();
-        MyDatabase myDatabase  = MyDatabase.getInstance(this);
+        MyDatabase myDatabase = MyDatabase.getInstance(this);
         adapter.submitAll(myDatabase.todoDao().getAllTodo());
     }
 }

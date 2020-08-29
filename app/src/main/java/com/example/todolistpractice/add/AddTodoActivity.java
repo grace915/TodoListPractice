@@ -104,10 +104,9 @@ public class AddTodoActivity extends AppCompatActivity {
                 if(month + 1< 10) month_s = "0" + month_s;
                 if(dayOfMonth <10 )day_s = "0" + day_s;
 
-                SimpleDateFormat simpleDateFormat = new SimpleDateFormat("yyyy/MM/dd");
+                SimpleDateFormat simpleDateFormat = new SimpleDateFormat("yyyy-MM-dd");
 
-
-                String date = year + "/" + month_s + "/" + day_s;
+                String date = year + "-" + month_s + "-" + day_s;
                 if (mode == START_DATE) {
                     til_sDate.getEditText().setText(date);
                 } else if (mode == DUE_DATE) {
@@ -156,7 +155,6 @@ public class AddTodoActivity extends AppCompatActivity {
 
                         TodoItem newItem = new TodoItem(title, dDate, sDate, memo);
                         MyDatabase myDatabase = MyDatabase.getInstance(AddTodoActivity.this);
-
                         myDatabase.todoDao().insertTodo(newItem);
 
                         finish();

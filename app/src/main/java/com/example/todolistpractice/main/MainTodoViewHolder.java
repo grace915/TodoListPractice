@@ -63,10 +63,9 @@ public class MainTodoViewHolder extends RecyclerView.ViewHolder {
         int mYear = cal.get(Calendar.YEAR);
         int mMonth = cal.get(Calendar.MONTH) + 1;
         int mDay = cal.get(Calendar.DAY_OF_MONTH);
-        SimpleDateFormat simpleDataFormat = new SimpleDateFormat("yyyy/MM/dd");
+        SimpleDateFormat simpleDataFormat = new SimpleDateFormat("yyyy-MM-dd");
         Date dDate = simpleDataFormat.parse(item.getDue_date());
-        todo_tv_left.setText("DDDD");
-        Date today = simpleDataFormat.parse(mYear + "/" + mMonth + "/" + mDay);
+        Date today = simpleDataFormat.parse(mYear + "-" + mMonth + "-" + mDay);
         Long left = -(dDate.getTime() - today.getTime()) / (24 * 60 * 60 * 1000);
 
 

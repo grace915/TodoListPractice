@@ -25,7 +25,7 @@ import java.util.List;
 
 public class MainTodoAdapter extends RecyclerView.Adapter<MainTodoViewHolder> {
 
-    private ArrayList<TodoItem> itemList = new ArrayList<>();
+    private List<TodoItem> itemList = new ArrayList<>();
 
 
 
@@ -36,25 +36,20 @@ public class MainTodoAdapter extends RecyclerView.Adapter<MainTodoViewHolder> {
         notifyDataSetChanged();
     }
 
-    public void addItem(TodoItem item){
-        itemList.add(item);
-        notifyDataSetChanged();
-    }
     public void removeAllITem(){
         itemList.clear();
         notifyDataSetChanged();
     }
-    public void removeAllItem(ArrayList<TodoItem> newItemList){
+    public void removeItem(int position ){
+        itemList.remove(position);
+        notifyDataSetChanged();
+    }
+    public void removeAllItem(List<TodoItem> newItemList){
         itemList.clear();
         itemList = newItemList;
-    }
-
-    public void removeItem(TodoItem todoItem, int position){
-        itemList.remove(todoItem);
-        notifyItemRemoved(position);
         notifyDataSetChanged();
-
     }
+
 
 
     public boolean checkItem(TodoItem item){

@@ -20,14 +20,13 @@ public class TodoItem implements Comparable<TodoItem>{
     private Boolean checked;
     @ColumnInfo(name = "start")
     private String start_date;
-
     @ColumnInfo(name = "memo")
     private String memo;
 
     @Ignore
     public TodoItem(String title){
         this.title = title;
-        due_date = null;
+        this.due_date = null;
         checked = false;
 
     }

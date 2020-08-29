@@ -95,7 +95,7 @@ public class UpdateTodoActivity extends AppCompatActivity {
         new DatePickerDialog(UpdateTodoActivity.this, new DatePickerDialog.OnDateSetListener() {
             @Override
             public void onDateSet(DatePicker view, int year, int month, int dayOfMonth) {
-                String date = "" + year + "/" + (month + 1) + "/" + dayOfMonth;
+                String date = "" + year + "-" + (month + 1) + "-" + dayOfMonth;
                 if (mode == START_DATE) {
                     til_sDate.getEditText().setText(date);
                 } else if (mode == DUE_DATE) {
